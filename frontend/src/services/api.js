@@ -58,3 +58,18 @@ export const getChatLogs = async () => {
         return [];
     }
 };
+
+export const sendMessage = async (message) => {
+    try {
+        const res = await fetch(`${API_URL}/webhook`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ sender: "User", message }),
+        });
+        if (!res.ok) throw new Error("Gagal mengirim pesan");
+        return await res.json();
+    } catch (error) {
+        console.error(error);
+        return { response: "Gagal mengirim pesan." };
+    }
+};
